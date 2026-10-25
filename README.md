@@ -1,12 +1,16 @@
 # Minecraft Launcher Controversies in China
 
-A dated, source-linked record of recent public disputes involving Minecraft launchers used in China. The detailed report is in [中文报告](docs/recent-controversies-zh-CN.md).
+A dated, source-linked record of recent public disputes involving Minecraft launchers used in China. Read the [animated chronicle](https://openlaunchorg.github.io/minecraft-launcher-controversies/) or the detailed [中文报告](docs/recent-controversies-zh-CN.md).
 
 **Coverage:** 2025-10-24 through 2026-10-25 (UTC), with dates shown in source-local time where stated. This is a selected record, not a complete history.
 
 **Editorial method:** distinguish repository changes and maintainer statements from researcher claims and community discussion; attribute disputed claims; preserve unresolved questions as unresolved. This document records events and statements, and does not make legal findings or decide whether a security label is warranted.
 
 **Disclosure:** OpenLaunch is a separately maintained PCL-derived launcher project. OpenLaunchOrg is not affiliated with the maintainers of the launchers discussed here. This relationship is disclosed so readers can assess the document's provenance.
+
+## Animated website
+
+The buildless site in `site/` presents five detailed chapters with source links and a PCL-OL · OpenLaunch introduction. It includes a source index, a local migration demonstration, reduced-motion preferences, and a static reading fallback. GitHub-hosted Actions check desktop/mobile layouts, keyboard focus, demo controls and reduced motion before publishing to GitHub Pages.
 
 ## Report
 
