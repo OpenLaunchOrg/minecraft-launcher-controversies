@@ -1,6 +1,15 @@
 'use strict';
 
 const root = document.documentElement;
+function createIcon(name) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'icon');
+  svg.setAttribute('aria-hidden', 'true');
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttribute('href', '#' + name);
+  svg.append(use);
+  return svg;
+}
 const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const motionButton = document.querySelector('.motion-toggle');
 let userPaused = false;
@@ -12,7 +21,7 @@ function syncMotion() {
   root.dataset.motion = reduced ? 'reduced' : 'full';
   motionButton.setAttribute('aria-pressed', String(reduced));
   motionButton.disabled = systemMotion.matches;
-  motionButton.querySelector('.motion-symbol').textContent = reduced ? '▷' : 'Ⅱ';
+  motionButton.querySelector('.motion-symbol').replaceChildren(createIcon(reduced ? 'play' : 'pause'));
   motionButton.querySelector('.motion-label').textContent = systemMotion.matches ? '跟随系统减少动态' : reduced ? '开启动效' : '暂停动态';
   motionButton.setAttribute('aria-label', motionButton.querySelector('.motion-label').textContent);
   motionButton.title = systemMotion.matches ? '遵循设备的减少动态设置' : reduced ? '开启动效' : '暂停动态';
@@ -91,10 +100,7 @@ for (const [title, provenance, url] of sources) {
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
   link.textContent = title;
-  const icon = document.createElement('span');
-  icon.textContent = '↗';
-  icon.setAttribute('aria-hidden', 'true');
-  link.append(icon);
+  link.append(createIcon('out'));
   const meta = document.createElement('small');
   meta.textContent = provenance;
   content.append(link, meta);
@@ -114,6 +120,9 @@ dialog.addEventListener('click', event => {
 
 // This demonstration updates local UI only; it never scans, imports or uploads files.
 const playDemo = document.querySelector('#play-demo');
+function setDemoButton(label, iconName) {
+  playDemo.replaceChildren(document.createTextNode(label + ' '), createIcon(iconName));
+}
 const demoTitle = document.querySelector('#demo-title');
 const demoDesc = document.querySelector('#demo-desc');
 const demoStatus = document.querySelector('#demo-status');
@@ -142,7 +151,7 @@ function renderDemo() {
 }
 function finishDemo() {
   demoRunning = false;
-  playDemo.textContent = '重新播放 ↻';
+  setDemoButton('重新播放', 'refresh');
 }
 function queueDemo() {
   demoTimer = window.setTimeout(() => {
@@ -157,7 +166,7 @@ playDemo.addEventListener('click', () => {
   if (demoRunning) {
     window.clearTimeout(demoTimer);
     demoRunning = false;
-    playDemo.textContent = '继续演示 ▷';
+    setDemoButton('继续演示', 'play');
     return;
   }
   if (demoStep === 2 || playDemo.textContent.includes('播放迁移')) {
@@ -165,13 +174,13 @@ playDemo.addEventListener('click', () => {
     renderDemo();
   }
   demoRunning = true;
-  playDemo.textContent = '暂停演示 Ⅱ';
+  setDemoButton('暂停演示', 'pause');
   queueDemo();
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && demoRunning) {
     window.clearTimeout(demoTimer);
     demoRunning = false;
-    playDemo.textContent = '继续演示 ▷';
+    setDemoButton('继续演示', 'play');
   }
 });
